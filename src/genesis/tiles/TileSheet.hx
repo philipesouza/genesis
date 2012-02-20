@@ -44,6 +44,16 @@ class TileSheet
 		return ref.length - 1;
 	}
 	
+	public function addTiles(tiles: Array<Int>)
+	{
+		var i = 0;
+		while (i < tiles.length)
+		{
+			addTile(tiles[i], tiles[i + 1]);
+			i += 2;
+		}
+	}
+	
 	public function addFacingTiles(
 		north_x: Int, north_y: Int,
 		east_x: Int, east_y: Int,

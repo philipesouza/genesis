@@ -5,61 +5,30 @@
 
 package genesis.actors;
 
-import genesis.Game;
-import nme.display.MovieClip;
-import nme.events.Event;
-import nme.events.KeyboardEvent;
-import nme.Lib;
+import genesis.clips.Clip;
 
 class Actor
 {
-	public var clip: MovieClip;
-	public var playing: Bool;
+	public var clip: Clip;
 	
-	public function new(?clip: MovieClip)
+	public function new(?clip: Clip)
 	{
 		this.clip = clip;
-		if (clip == null) playing = false;
-		playing = true;
 	}
 	
-	public function setClip(?clip: MovieClip)
+	public function setClip(?clip: Clip)
 	{
-		if (clip == null) clip = new MovieClip();
+		if (clip == null) clip = new Clip();
 		this.clip = clip;
-		playing = true;
 	}
 	
 	public function pause(): Void
 	{
-		playing = false;
+		clip.pause();
 	}
 	
 	public function resume(): Void
 	{
-		playing = true;
-	}
-	
-	/* Basic events*/
-	public function onFrame(f: Dynamic->Void): Void
-	{
-		Lib.current.stage.addEventListener(Event.ENTER_FRAME, f);
-	}
-	
-	public function onKeyDown(f: Dynamic->Void): Void
-	{
-		Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, f);
-	}
-	
-	public function onKeyUp(f: Dynamic->Void): Void
-	{
-		Lib.current.stage.addEventListener(KeyboardEvent.KEY_UP, f);
-	}
-	
-	/* Basic actions*/
-	public function move(x: Int, y: Int): Void
-	{
-		clip.x += x;
-		clip.y += y;
+		clip.resume();
 	}
 }

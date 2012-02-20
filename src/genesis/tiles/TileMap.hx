@@ -6,19 +6,21 @@
 package genesis.tiles;
 
 import genesis.actors.Actor;
-import genesis.tiles.TileMappings.TileKey;
+import genesis.board.BoardMobile;
+import genesis.board.DirKey;
+import genesis.board.DirMapping;
 
 import nme.geom.Point;
 import nme.display.Bitmap;
 import nme.display.BitmapData;
 import nme.geom.Rectangle;
 
-class TileMap extends Actor
+class TileMap extends Actor, implements BoardMobile
 {
 	public var sheet: TileSheet;
 	public var map: Array<Array<Tile>>;
 	
-	public var keys: TileKey;
+	public var keys: DirKey;
 	public var player: TileChar;
 	
 	public function new(sheet: TileSheet, matrix: Array<Array<Int>>)
@@ -57,29 +59,37 @@ class TileMap extends Actor
 		}
 	}
 	
-	private function handleKeyDown(event: Dynamic): Void
-	{
-		var facing = keys.toFacing(event.keyCode);
-		if (facing == -1) return;
-		
-		player.startMoving(facing);
-	}
-	
-	private function handleKeyUp(event: Dynamic): Void
-	{	
-		if (player.facing != keys.toFacing(event.keyCode)) return;
-		player.stopMoving();
-	}
-	
-	public function setMovePlayer(player: TileChar, ?keys: TileKey)
+	public function setPlayer(player: TileChar)
 	{
 		this.player = player;
-		
-		if (keys == null) keys = new TileKey(38, 39, 40, 37);
-		this.keys = keys;
-		
-		onKeyDown(handleKeyDown);
-		onKeyUp(handleKeyUp);
-		onFrame(player.handleFrame);
+	}
+	
+	public function moveUp(): Void
+	{
+		player.clip.setFacing(DirMapping.UP);
+		player.clip.moveUp();
+	}
+	
+	public function moveLeft(): Void
+	{
+		player.clip.setFacing(DirMapping.LEFT);
+		player.clip.moveLeft();
+	}
+	
+	public function moveDown(): Void
+	{
+		player.clip.setFacing(DirMapping.DOWN);
+		player.clip.moveDown();
+	}
+	
+	public function moveRight(): Void
+	{
+		player.clip.setFacing(DirMapping.RIGHT);
+		player.clip.moveRight();
+	}
+	
+	public function stopMoving(): Void
+	{
+		player.clip.stopMoving();
 	}
 }

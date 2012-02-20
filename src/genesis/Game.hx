@@ -18,6 +18,7 @@
 package genesis;
 
 import genesis.actors.Actor;
+import genesis.clips.Clip;
 import nme.events.KeyboardEvent;
 
 import nme.Lib;
@@ -28,7 +29,8 @@ class Game extends Actor
 	
 	public function new(scene: Scene)
 	{
-		super(Lib.current);
+		super(new Clip());
+		Lib.current.addChild(clip);
 		this.scene = scene;
 	}
 	
@@ -48,7 +50,7 @@ class Game extends Actor
 	{
 		if (event.keyCode == 192)
 		{
-			if (playing) pause();
+			if (clip.playing) pause();
 			else resume();
 		}
 		

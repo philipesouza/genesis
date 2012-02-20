@@ -20,13 +20,15 @@ class Scene extends Actor
 		for (actor in actors) clip.addChild(actor.clip);
 	}
 	
-	public override function pause()
+	public override function pause(): Void
 	{
+		super.pause();
 		for (actor in actors) actor.pause();
 	}
 	
-	public override function resume()
+	public override function resume(): Void
 	{
+		super.resume();
 		for (actor in actors) actor.resume();
 	}
 }
